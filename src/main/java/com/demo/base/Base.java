@@ -42,7 +42,7 @@ public class Base {
 		driver.manage().timeouts().implicitlyWait(timeOut, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		log.info("Driver is initialized.");
-		
+
 		driver.get(appURL);
 
 		return driver;

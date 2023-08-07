@@ -11,15 +11,13 @@ import com.aventstack.extentreports.Status;
 import com.demo.reports.ExtentReporterNG;
 import com.demo.utils.Utils;
 
+public class Listeners extends Utils implements ITestListener {
 
-
-public class Listeners extends Utils implements ITestListener{
-	
 	ExtentReports extent = ExtentReporterNG.getReportObject();
 	ExtentTest test;
 	String testMethodName;
 	ThreadLocal<ExtentTest> extentTest = new ThreadLocal<ExtentTest>();
-	
+
 	public void onTestStart(ITestResult result) {
 		testMethodName = result.getMethod().getMethodName();
 		test = extent.createTest(testMethodName);
@@ -27,16 +25,17 @@ public class Listeners extends Utils implements ITestListener{
 	}
 
 	public void onTestSuccess(ITestResult result) {
-		extentTest.get().log(Status.PASS, testMethodName+" has been Passed");
+		extentTest.get().log(Status.PASS, testMethodName + " has been passed");
 	}
 
 	public void onTestFailure(ITestResult result) {
 		extentTest.get().fail(result.getThrowable());
-		
+
 		WebDriver driver = null;
 		try {
-			extentTest.get().log(Status.FAIL, testMethodName+" has been Failed");
-			driver = (WebDriver)result.getTestClass().getRealClass().getDeclaredField("driver").get(result.getInstance());
+			extentTest.get().log(Status.FAIL, testMethodName + " has been failed");
+			driver = (WebDriver) result.getTestClass().getRealClass().getDeclaredField("driver")
+					.get(result.getInstance());
 			extentTest.get().addScreenCaptureFromPath(getScreenshotPath(testMethodName, driver), testMethodName);
 		} catch (Exception e) {
 			System.out.println("Unable to take Screenshot.");
@@ -45,7 +44,7 @@ public class Listeners extends Utils implements ITestListener{
 	}
 
 	public void onTestSkipped(ITestResult result) {
-		extentTest.get().log(Status.SKIP, testMethodName+" has been Skipped");
+		extentTest.get().log(Status.SKIP, testMethodName + " has been skipped");
 	}
 
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
