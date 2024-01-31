@@ -17,6 +17,8 @@ import com.demo.base.Base;
 
 public class PageActions extends Base{
 
+	
+	//For testing
 	public WebDriver driver;
 	private Logger log = LogManager.getLogger(PageActions.class.getName());
 
